@@ -35,6 +35,20 @@ public class PlaceRepository : IPlaceRepository
             places = places.Where(x => x.Name.ToLower().Contains(nameplace));
         }
 
+        if (!string.IsNullOrEmpty(placeParams.CityPlace))
+        {
+            string cityplace = placeParams.CityPlace.ToLower().Trim();
+
+            places = places.Where(x => x.City.ToLower().Contains(cityplace));
+        }
+
+        if (!string.IsNullOrEmpty(placeParams.StatePlace))
+        {
+            string stateplace = placeParams.StatePlace.ToLower().Trim();
+
+            places = places.Where(x => x.State.ToLower().Contains(stateplace));
+        }
+
         return await places.ToListAsync();
         
     }
