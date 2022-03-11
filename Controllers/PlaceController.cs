@@ -40,13 +40,13 @@ public class PlaceController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post(PlaceCreateDto placecreateDto)
     {
-
         var place = _mapper.Map<Place>(placecreateDto);
 
         _repository.CreatePlace(place);
 
         return await _repository.SaveChangesAsync() ? Ok("Place created successfully") : BadRequest("Error when creating place");
     }
+
     [HttpPut("{id}")]
     public async Task<IActionResult> Put(int id, PlaceUpdateDto placeUpadateDto)
     {

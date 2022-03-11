@@ -1,6 +1,10 @@
-﻿namespace Test_BackEnd.Model;
+﻿using Flunt.Notifications;
+using Flunt.Validations;
+using System.ComponentModel.DataAnnotations;
 
-public class Place
+namespace Test_BackEnd.Model;
+
+public class Place 
 {
     public int Id { get; set; }
     public string Name { get; set; }
@@ -9,5 +13,6 @@ public class Place
     public string State { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
+
 }
 
