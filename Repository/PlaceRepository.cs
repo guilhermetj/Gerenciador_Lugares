@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Gerenciador_Lugares.Model;
+using Microsoft.EntityFrameworkCore;
 using Test_BackEnd.Data;
 using Test_BackEnd.Model;
 using Test_BackEnd.Repository.Interfaces;
@@ -13,20 +14,19 @@ public class PlaceRepository : IPlaceRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Place>> GetPlacesParams(string name)
+    public async Task<IEnumerable<Place>> GetPlaces(PlaceParams placeParams)
     {
         var places = _context.Places.AsQueryable();
-        string nameplace = name.ToLower().Trim();
 
-            places = places.Where(x => x.Name.ToLower().Contains(name));
+        if(!string.IsNullOrEmpty(placeParams.NamePlace))
+        {
+            string nameplace = placeParams.NamePlace.ToLower().Trim();
+
+            places = places.Where(x => x.Name.ToLower().Contains(nameplace));
+        }
 
         return await places.ToListAsync();
         
-    }
-    public async Task<IEnumerable<Place>> GetPlaces()
-    {
-        return await _context.Places.ToListAsync();
-
     }
     public async Task<Place> GetPlaceById(int id)
     {

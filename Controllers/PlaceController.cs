@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Gerenciador_Lugares.Model;
+using Microsoft.AspNetCore.Mvc;
 using Test_BackEnd.Model;
 using Test_BackEnd.Repository.Interfaces;
 
@@ -16,18 +17,12 @@ public class PlaceController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get(string ?name)
+    public async Task<IActionResult> Get([FromQuery]PlaceParams placeParams)
     {
-        
-        if (name != null)
-        {
-            var placesP = await _repository.GetPlacesParams(name);
-            return placesP.Any() ? Ok(placesP) : NoContent();
-        }
-
-        var places = await _repository.GetPlaces();
+        var places = await _repository.GetPlaces(placeParams);
         return places.Any() ? Ok(places) : NoContent();
     }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetbyId(int id)
     {
