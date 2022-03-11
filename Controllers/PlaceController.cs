@@ -1,4 +1,6 @@
-﻿using Gerenciador_Lugares.Model;
+﻿using AutoMapper;
+using Gerenciador_Lugares.Model;
+using Gerenciador_Lugares.Model.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using Test_BackEnd.Model;
 using Test_BackEnd.Repository.Interfaces;
@@ -10,16 +12,19 @@ namespace Test_BackEnd.Controllers;
 public class PlaceController : ControllerBase
 {
     private readonly IPlaceRepository _repository;
+    private readonly IMapper _mapper;
 
-    public PlaceController(IPlaceRepository repository)
+    public PlaceController(IPlaceRepository repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery]PlaceParams placeParams)
     {
         var places = await _repository.GetPlaces(placeParams);
+
         return places.Any() ? Ok(places) : NoContent();
     }
 
@@ -28,7 +33,9 @@ public class PlaceController : ControllerBase
     {
         var places = await _repository.GetPlaceById(id);
 
-        return places != null ? Ok(places) : NotFound("place not found");
+        var placesReturn = _mapper.Map<PlaceDto>(places);
+
+        return placesReturn != null ? Ok(placesReturn) : NotFound("place not found");
     }
 
     [HttpPost]

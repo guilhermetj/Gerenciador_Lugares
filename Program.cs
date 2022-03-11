@@ -1,4 +1,6 @@
+using Gerenciador_Lugares.Helpers;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using Test_BackEnd.Data;
 using Test_BackEnd.Repository;
 using Test_BackEnd.Repository.Interfaces;
@@ -6,6 +8,7 @@ using Test_BackEnd.Repository.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
