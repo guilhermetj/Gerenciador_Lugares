@@ -22,7 +22,9 @@ public class PlaceRepository : IPlaceRepository
                             Id = x.Id, 
                             Name = x.Name,
                             City = x.City,
-                            State = x.State
+                            State = x.State,
+                            CreatedAt = x.CreatedAt,
+                            UpdatedAt= x.UpdatedAt
                         })
                         .AsQueryable();
 

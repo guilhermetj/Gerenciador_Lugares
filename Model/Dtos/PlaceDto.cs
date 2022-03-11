@@ -6,4 +6,6 @@ public class PlaceDto
     public string Name { get; set; }
     public string City { get; set; }
     public string State { get; set; }
+    public DateTime CreatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 }

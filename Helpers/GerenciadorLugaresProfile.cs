@@ -9,5 +9,9 @@ public class GerenciadorLugaresProfile : Profile
     public GerenciadorLugaresProfile()
     {
         CreateMap<Place, PlaceDto>();
+
+        CreateMap<PlaceCreateDto, Place>();
+
+        CreateMap<PlaceUpdateDto, Place>().ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
     }
 }

@@ -37,29 +37,27 @@ public class PlaceController : ControllerBase
 
         return placesReturn != null ? Ok(placesReturn) : NotFound("place not found");
     }
-
     [HttpPost]
-    public async Task<IActionResult> Post(Place place)
+    public async Task<IActionResult> Post(PlaceCreateDto placecreateDto)
     {
+
+        var place = _mapper.Map<Place>(placecreateDto);
+
         _repository.CreatePlace(place);
+
         return await _repository.SaveChangesAsync() ? Ok("Place created successfully") : BadRequest("Error when creating place");
     }
     [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, Place place)
+    public async Task<IActionResult> Put(int id, PlaceUpdateDto placeUpadateDto)
     {
+
         var placeBanco = await _repository.GetPlaceById(id);
+
         if (placeBanco == null) return NotFound("place not found");
 
+        var place = _mapper.Map(placeUpadateDto, placeBanco);
 
-        placeBanco.Name = place.Name ?? placeBanco.Name;
-        placeBanco.Slug = place.Slug ?? placeBanco.Slug;
-        placeBanco.City = place.City ?? placeBanco.City;
-        placeBanco.State = place.State ?? placeBanco.State;
-        placeBanco.UpdatedAt = DateTime.Now;
-        
-        
-
-        _repository.UpdatePlace(placeBanco);
+        _repository.UpdatePlace(place);
 
         return await _repository.SaveChangesAsync() ? Ok("Place updated successfully") : BadRequest("Error when editing place");
     }
